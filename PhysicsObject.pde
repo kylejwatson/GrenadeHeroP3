@@ -1,18 +1,16 @@
-class PhysicsObject{
- PVector pos;
- PImage img;
- 
- PhysicsObject(PVector pos, PImage img){
-   this.pos = pos;
-   this.img = img;
+class PhysicsObject extends DisplayObject{
+ PVector vel;
+ float gravity;
+ PhysicsObject(PVector pos, PImage img, PVector vel, float gravity){
+   super(pos, img);
+   this.vel = vel;
+   this.gravity = gravity;
  }
  
- 
- void draw(){
-   image(img, pos.x,pos.y);
- }
- 
- void update(float delta, int a, int d, int w){
-   
+ void update(float delta){
+   vel.y += (gravity/10) * delta;
+   pos.y += vel.y;
+   pos.x += vel.x;
+   super.update(delta);
  }
 }

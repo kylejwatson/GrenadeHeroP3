@@ -1,7 +1,7 @@
 Player myPlayer;
 float gravity;
 int delta,lastTime;
-ArrayList<PhysicsObject> map;
+ArrayList<DisplayObject> map;
 PImage ground;
 HashMap<String,Dirt> dirtMap;
 BufferedReader mapReader;
@@ -11,7 +11,7 @@ int d;
 int w;
 
 void setup(){
-  map = new ArrayList<PhysicsObject>();
+  map = new ArrayList<DisplayObject>();
   mapReader = createReader("map.txt");
   a = 0;
   d = 0;
@@ -59,7 +59,7 @@ void draw(){
   background(0,0,0);
  delta = millis() - lastTime;
  text(float(delta)/10, 20,20);
- for(PhysicsObject p : map){
+ for(DisplayObject p : map){
    p.draw();
  }
  text(myPlayer.pos.y,20,60);
@@ -68,8 +68,8 @@ void draw(){
 }
 
 void update(){
- for(PhysicsObject p : map){
-   p.update(delta,a,d,w);
+ for(DisplayObject p : map){
+   p.update(delta);
  }
  x = int(myPlayer.pos.x/15);
  y = int(myPlayer.pos.y/15);
@@ -99,4 +99,8 @@ void keyReleased(){
   d = 0;
   if(key == 'w')
   w = 0;
+}
+
+void mouseReleased(){
+  myPlayer.throwNade(map);
 }

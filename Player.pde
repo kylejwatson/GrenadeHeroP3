@@ -1,22 +1,19 @@
 class Player extends PhysicsObject{
- PVector vel;
- float gravity;
  boolean floored;
  float jump;
  float walkspeed;
+ PImage grenImg;
  
  Player(PVector pos, PVector vel, PImage img, float gravity){
-   super(pos,img);
-   this.vel = vel;
-   this.gravity = gravity;
+   super(pos,img,vel,gravity);
+   grenImg =  loadImage("gren.png");
    floored = false;
    jump = 5;
    walkspeed = 2;
  }
  
  void update(float delta, int a, int d, int w){
-   super.update(delta,a,d,w);
-   vel.y += (gravity/10) * delta;
+   super.update(delta);
    if(floored){
      if(w==1){
        this.pos.y -= 5;
@@ -36,9 +33,6 @@ class Player extends PhysicsObject{
     this.vel.x = -walkspeed*2; 
    }
    floored = false;
-   super.pos.y += vel.y;
-   super.pos.x += vel.x;
-   //println(vel.x + " " + abs(vel.x) + " " + );
  }
  
  void collision(Dirt dirt){
@@ -50,4 +44,8 @@ class Player extends PhysicsObject{
    this.pos.y = dirt.pos.y-30;
    this.vel.y = 0;
  }
+  void throwNade(ArrayList<DisplayObject> map){
+    println((mouseX - pmouseX) + " " + (mouseY - pmouseY));
+    map.add(new Grenade(new PVector(mouseX,mouseY),grenImg, new PVector(mouseX - pmouseX,mouseY - pmouseY),gravity));
+  }
 }
