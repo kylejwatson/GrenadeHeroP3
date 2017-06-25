@@ -69,7 +69,20 @@ void draw(){
 
 void update(){
  for(DisplayObject p : map){
-   p.update(delta);
+   if(p instanceof Player){
+     Player P = (Player) p;
+     P.update(delta, a,d,w); 
+   }else{
+     if(p instanceof Grenade){
+       Grenade g = (Grenade) p;
+       Dirt dirt = dirtMap.get(int(g.pos.x/15) + " " + int((g.pos.y/15)+1));
+       if(dirt != null){
+         g.collision(dirt); 
+       }
+     }
+     p.update(delta); 
+   }
+   
  }
  x = int(myPlayer.pos.x/15);
  y = int(myPlayer.pos.y/15);
