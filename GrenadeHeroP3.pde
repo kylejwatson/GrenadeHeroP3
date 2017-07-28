@@ -32,15 +32,18 @@ void setup(){
      if(line == null){
        break;
      }
+     boolean blockPlaced = false;
      for(int i = 0; i < line.length(); i++){
       if(line.charAt(i) == '1'){
         dirtMap.put(hor +" " + ver,new Dirt(new PVector(hor*15,ver*15),ground));
         map.add(dirtMap.get(hor +" " + ver));
+        blockPlaced = true;
       }
       hor ++;
      }
      hor = 0;
-     ver++;
+     if(blockPlaced)
+       ver++;
    }
  }catch(IOException e){
    hasNext = false;
