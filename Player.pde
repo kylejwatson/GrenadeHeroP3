@@ -3,13 +3,24 @@ class Player extends PhysicsObject{
  float jump;
  float walkspeed;
  PImage grenImg;
+ PImage aimImg;
  
  Player(PVector pos, PVector vel, PImage img, float gravity){
    super(pos,img,vel,gravity);
    grenImg =  loadImage("gren.png");
+   aimImg =  loadImage("aim.png");
    floored = false;
    jump = 5;
    walkspeed = 2;
+ }
+ 
+ void draw(){
+   super.draw();
+    float angle = atan2(mouseX-this.pos.x, mouseY-this.pos.y);
+    PVector newVel = new PVector(sin(angle),cos(angle));
+    newVel.mult(30);
+    newVel.add(this.pos);
+   image(aimImg,newVel.x,newVel.y);
  }
  
  void update(float delta, int a, int d, int w){
@@ -45,7 +56,11 @@ class Player extends PhysicsObject{
    this.vel.y = 0;
  }
   void throwNade(ArrayList<DisplayObject> map){
-    println((mouseX - pmouseX) + " " + (mouseY - pmouseY));
-    map.add(new Grenade(new PVector(mouseX,mouseY),grenImg, new PVector(mouseX - pmouseX,mouseY - pmouseY),gravity));
+    float angle = atan2(mouseX-this.pos.x, mouseY-this.pos.y);
+    PVector newVel = new PVector(sin(angle),cos(angle));
+    newVel.mult(6);
+    newVel.add(this.vel);
+    
+    map.add(new Grenade(new PVector(this.pos.x,this.pos.y),grenImg, newVel,gravity));
   }
 }

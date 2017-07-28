@@ -9,8 +9,7 @@ class PhysicsObject extends DisplayObject{
  
  void update(float delta){
    vel.y += (gravity/10) * delta;
-   pos.y += vel.y;
-   pos.x += vel.x;
+   pos.add(vel);
    super.update(delta);
  }
 }

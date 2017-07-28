@@ -56,7 +56,7 @@ void setup(){
 }
 
 void draw(){
-  background(0,0,0);
+  background(255,255,255);
  delta = millis() - lastTime;
  text(float(delta)/10, 20,20);
  for(DisplayObject p : map){
@@ -68,13 +68,17 @@ void draw(){
 }
 
 void update(){
- for(DisplayObject p : map){
+ for(int i = 0; i < map.size(); i++){
+   DisplayObject p = map.get(i);
    if(p instanceof Player){
      Player P = (Player) p;
      P.update(delta, a,d,w); 
    }else{
      if(p instanceof Grenade){
        Grenade g = (Grenade) p;
+       if(g.explode){
+        g.blow(dirtMap,map);
+       }
        Dirt dirt = dirtMap.get(int(g.pos.x/15) + " " + int((g.pos.y/15)+1));
        if(dirt != null){
          g.collision(dirt); 
